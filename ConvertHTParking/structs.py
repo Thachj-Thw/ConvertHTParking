@@ -17,6 +17,7 @@ class InputForm:
 
 @dataclass
 class OutputCardForm:
+    ordinal: str
     card_no: str
     card_id: str
     card_type: str
@@ -27,6 +28,7 @@ class OutputCardForm:
 
 @dataclass
 class OutputUserForm:
+    ordinal: str
     card_no: str
     user_id: str
     vehicle: str
@@ -48,3 +50,8 @@ class DataStruct:
     end_time: str
     name: str
     address: str
+    is_month: bool
+
+    def is_emty(self) -> bool:
+        return not self.card_no and not self.card_id and not self.user_id \
+            and not self.vehicle and not self.vehicle_plate and not self.end_time and not self.name and not self.address
