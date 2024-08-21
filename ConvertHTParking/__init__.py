@@ -60,6 +60,7 @@ class ZKTeck:
         self.user_vehicle = user_vehicle
         self.end_row = end_row
         self.emty = emty
+        print("loading workbook")
         self.workbook = load_workbook(filename=file_path)
         self.sheet = self.workbook.active
         self.card_file = load_workbook(filename=path.source.join("templates", "BaseCard.xlsx"))
@@ -70,11 +71,10 @@ class ZKTeck:
         self.user_sheet = self.card_user.active
         self.card_sheet_lock = self.card_file_lock.active
         self.user_sheet_lock = self.card_user_lock.active
-        self.day_vehicle = []
 
     def _split_data(self) -> list[DataStruct]:
         all_data = []
-        self.day_vehicle.clear()
+        card_day = []
         emty_counter = 0
         for row in range(self.input_form.start, self.end_row):
             print("Read row: ", row)
@@ -109,15 +109,16 @@ class ZKTeck:
                 user_id = self.sheet[self.input_form.user_id + str_row].value
             is_month = vehicle in self.user_vehicle
             if not is_month:
-                self.day_vehicle.append(card_no)
+                card_day.append(card_no)
             data = DataStruct(card_no, card_id, user_id, True if status == "Hoạt động" else False ,vehicle, vehicle_plate, end_time, name, address, is_month)
             all_data.append(data)
         
-        def sort_method(value: DataStruct) -> int:
-            if match := re.search(r"[0-9]+", value.card_no):
-                return int(match.group())
-            return 0
-        all_data.sort(key=sort_method)
+        for data in all_data:
+            if data.is_month and data.card_no in card_day:
+                data.card_no += "T"
+
+        print("sorting")
+        all_data.sort(key=lambda x: (len(x.card_no), x.card_no))
         return all_data
 
     def convert(self, save_card_as: str, save_user_as: str):
@@ -128,8 +129,6 @@ class ZKTeck:
         user_lock_number = 0
         for data in self._split_data():
             card_no = data.card_no
-            if data.is_month and data.card_no in self.day_vehicle:
-                card_no = data.card_no + "T"
             if data.is_activate:
                 str_row = str(self.card_form.start + active_number)
                 active_number += 1

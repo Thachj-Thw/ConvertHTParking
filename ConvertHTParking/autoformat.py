@@ -27,5 +27,5 @@ def format_vehicle_plate_car(input_str: str) -> str:
 
 def format_card_code(input_str: str) -> str:
     fix = input_str.replace(" ", "").upper()
-    out = re.sub(r'NO(\.|,)*(?=[0-9A-Z])', "No.", fix)
+    out = re.sub(r'(NO|N0)(\.|,)*(?=[0-9A-Z])', "No.", fix)
     return out
