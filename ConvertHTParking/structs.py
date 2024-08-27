@@ -32,9 +32,11 @@ class OutputUserForm:
     card_no: str
     user_id: str
     vehicle: str
+    vehicle_plate: str
     name: str
     address: str
     end_time: str
+    vehicle_type: str
     start: int
 
 

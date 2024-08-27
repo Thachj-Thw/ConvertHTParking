@@ -7,11 +7,11 @@ def format_vehicle_plate_motor(input_str: str) -> str:
         if chr.isalnum():
             output_lst.append(chr.upper())
     if len(output_lst) == 8:
-        return "%s%s%s%s-%s%s%s%s" % tuple(output_lst)
+        return "%s%s-%s%s-%s%s%s%s" % tuple(output_lst)
     elif len(output_lst) == 9:
-        return "%s%s%s%s-%s%s%s.%s%s" % tuple(output_lst)
+        return "%s%s-%s%s-%s%s%s.%s%s" % tuple(output_lst)
     elif len(output_lst) == 10:
-        return "%s%s%s%s%s-%s%s%s%s%s" % tuple(output_lst)
+        return "%s%s%s-%s%s-%s%s%s%s%s" % tuple(output_lst)
     return input_str
 
 
