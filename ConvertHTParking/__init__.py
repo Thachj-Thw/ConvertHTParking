@@ -13,20 +13,8 @@ import os
 path = module.Path(__file__)
 
 
-class KzParking:
 
-    input_form = InputForm(
-        card_no         = "B",
-        card_id         = "C",
-        vehicle         = "D",
-        vehicle_plate   = "E",
-        end_time        = "F",
-        status          = "G",
-        user_id         = "C",
-        name            = "I",
-        address         = "J",
-        start           = 9
-    )
+class HTParking:
 
     card_form = OutputCardForm(
         ordinal     = "A",
@@ -52,7 +40,21 @@ class KzParking:
     )
 
 
-class KzParking2:
+class KzParking:
+
+    user_form = InputForm(
+        card_no         = "B",
+        card_id         = "C",
+        vehicle         = "D",
+        vehicle_plate   = "E",
+        end_time        = "F",
+        status          = "G",
+        user_id         = "C",
+        name            = "I",
+        address         = "J",
+        start           = 9
+    )
+
     def __init__(self, convert_vehicle: dict, vehicle_month: list, prioritize: list,
                  fix_duplicate_card_method: callable,
                  end_row: int = 10000,
@@ -251,14 +253,14 @@ class KzParking2:
         all_data = []
         for idx, file in enumerate(lst_file):
             if idx == pass_index:
-                all_data += self._read_excel(file, KzParking.input_form, pass_vehicle)
+                all_data += self._read_excel(file, KzParking.user_form, pass_vehicle)
             else:
-                all_data += self._read_excel(file, KzParking.input_form, None)
+                all_data += self._read_excel(file, KzParking.user_form, None)
 
         card_data, user_data = self._split_data(all_data)
         self._fix_card_duplicate(card_data, user_data)
         card_lock, card_use = self._split_card_lock(card_data)
-        self._save_card_excel(card_use, save_card, KzParking.card_form)
-        self._save_user_excel(user_data, save_user, KzParking.user_form)
+        self._save_card_excel(card_use, save_card, HTParking.card_form)
+        self._save_user_excel(user_data, save_user, HTParking.user_form)
         tail = os.path.splitext(save_card)[1]
-        self._save_card_excel(card_lock, save_card.replace(tail, "_lock" + tail), KzParking.card_form)
+        self._save_card_excel(card_lock, save_card.replace(tail, "_lock" + tail), HTParking.card_form)

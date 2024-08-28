@@ -1,4 +1,4 @@
-from ConvertHTParking import KzParking2
+from ConvertHTParking import KzParking
 from ConvertHTParking.autoformat import format_vehicle_plate_car, format_vehicle_plate_motor
 
 
@@ -73,7 +73,7 @@ def fix_card_duplicate(card_no: str, obj: dict, invalid: list) -> str:
 
 
 
-kz = KzParking2(convert_vehicle, vehicle_month, prioritize, fix_card_duplicate, format_vehicle_plate_method=format_plate)
+kz = KzParking(convert_vehicle, vehicle_month, prioritize, fix_card_duplicate, format_vehicle_plate_method=format_plate)
 
 kz.convert([
     "Input/Danh-sách-thẻ-140820241421- ÔTÔ - CĐT PHỤ TRÁCH.xlsx",
